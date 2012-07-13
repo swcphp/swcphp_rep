@@ -7,9 +7,11 @@
 <?php echo art_node_title_output($title, $node_url, $page); ?>
 <?php print render($title_suffix); ?>
 </h2>
-<?php 
-$field_plant_name_en=$content['field_plant_name_en']['#items']['0']['safe_value'];
-if($field_plant_name_en!='')echo '<h3>'.$field_plant_name_en.'</h3>';
+<?php
+	if(isset($content['field_plant_name_en'])){
+		$field_plant_name_en=$content['field_plant_name_en']['#items']['0']['safe_value'];
+		if($field_plant_name_en!='')echo '<h3>'.$field_plant_name_en.'</h3>';
+	}
 ?>
 <?php if ($display_submitted): ?>
 <div class="art-postheadericons art-metadata-icons">
@@ -19,28 +21,72 @@ if($field_plant_name_en!='')echo '<h3>'.$field_plant_name_en.'</h3>';
 <?php endif; ?>
 <div class="art-postcontent">
 <?php
+	/*
 echo'<pre>';
 //print_r(array_keys($content));
 //print_r(array_keys($content['field_image']));
 //$content['field_plant_name_en']['#items']['0']['safe_value']
 print_r($content['field_image'][0]['#items']);
 echo'</pre>';
+	*/
       // We hide the comments and links now so that we can render them later.
       hide($content['comments']);
       hide($content['links']);
 	hide($content['field_plant_name_en']);
 	hide($content['field_image']);
 	hide($content['body']);
-	print render($content['field_image']);
 	print render($content['body']);
-    ?>
-	<div id="card">
-<?php 
-print render($content);
-?>
 
+	if(render($content)!=''){
+	?>
+	<div class="art-block card">
+		<div class="art-block-tl"></div>
+		<div class="art-block-tr"></div>
+		<div class="art-block-bl"></div>
+		<div class="art-block-br"></div>
+		<div class="art-block-tc"></div>
+		<div class="art-block-bc"></div>
+		<div class="art-block-cl"></div>
+		<div class="art-block-cr"></div>
+		<div class="art-block-cc"></div>
+		<div class="art-block-body">
+			<div class="art-blockheader">
+				<div class="l"></div>
+				<div class="r"></div>
+				<h3 class="t subject">Карточка растения</h3>
+			</div>
+			<div class="art-blockcontent">
+				<div class="art-blockcontent-tl"></div>
+				<div class="art-blockcontent-tr"></div>
+				<div class="art-blockcontent-bl"></div>
+				<div class="art-blockcontent-br"></div>
+				<div class="art-blockcontent-tc"></div>
+				<div class="art-blockcontent-bc"></div>
+				<div class="art-blockcontent-cl"></div>
+				<div class="art-blockcontent-cr"></div>
+				<div class="art-blockcontent-cc"></div>
+				<div class="art-blockcontent-body">
+					<div class="content">
+						<?php
+						print render($content);
+						?>
+						<div class="image" style="float: right;">
+							<?= render($content['field_image']);?>
+						</div>
+					</div>
+					<div class="cleared"></div>
+				</div>
+			</div>
+			<div class="cleared"></div>
+		</div>
 	</div>
 
+<style>
+	#card .field{
+
+	}
+</style>
+<?php }?>
 </div>
 <div class="cleared"></div>
 <?php print $user_picture; ?>
